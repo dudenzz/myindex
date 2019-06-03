@@ -1,0 +1,5 @@
+#include <string>
+
+
+class document
+{

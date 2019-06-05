@@ -1,3 +1,11 @@
-# myindex
+#Myindex project.
 
-working on readme
+Make sure you have g++-8 installed. It should support C++17.
+
+Usage:
+
+	1. Sync (or clone) with repository
+	2. make
+	3. ./bin/GeneralTest path_to_a_directory_with_any_set_of_documents number_of_processing_threads
+	4. ./bin/ParserTest path_to_a_directory_with_pubmed_documents number_of_processing_threds
+

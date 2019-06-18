@@ -2,7 +2,7 @@
 
 Make sure you have g++-8 installed. It should support C++17.
 
-Make sure you have boost c++ installed.
+Make sure you have boost algorithms package for c++ installed.
 
 Usage:
 

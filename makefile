@@ -1,6 +1,6 @@
 CC=gcc
 CXX=g++-8
-CPPFLAGS=-std=c++17 -pthread 
+CPPFLAGS=-std=c++17 -pthread -Ofast
 FSFLAG=-lstdc++fs
 
 SRCSP= test/parserTest.cpp src/XMLParser/pmXMLparser.cpp

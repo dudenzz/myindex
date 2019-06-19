@@ -1,4 +1,4 @@
-UWAGA! Proszę o nie testowanie parsera - do odwołania. Muszę opracować sposób w którym będę sobie radził parsując "od lewej" z duplikatami nazw tagów. 
+UWAGA! Proszę o nie testowanie parsera - do odwołania. Muszę opracować sposób w którym będę sobie radził parsując "od lewej" z duplikatami nazw tagów - teraz generowane jest zbyt dużo plików. Poza tym wygenerowane pliki mogą stanowić wyzwanie dla systemu plików. 
 
 Testować można natomiast indeks.
 

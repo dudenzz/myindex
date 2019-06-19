@@ -1,5 +1,6 @@
 UWAGA! Proszę o nie testowanie parsera - do odwołania. Muszę opracować sposób w którym będę sobie radził parsując "od lewej" z duplikatami nazw tagów. 
 
+Testować można natomiast indeks.
 
 #Myindex project.
 

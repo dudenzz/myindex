@@ -1,3 +1,6 @@
+UWAGA! Proszę o nie testowanie parsera - do odwołania. Muszę opracować sposób w którym będę sobie radził parsując "od lewej" z duplikatami nazw tagów. 
+
+
 #Myindex project.
 
 Make sure you have g++-8 installed. It should support C++17.

@@ -51,6 +51,8 @@ public:
 	Index(std::string docRootPath);
 	//simple constructor, calculates the number of processing thread, tries to assign no_processes threads, if however document set is too small or  
 	Index(std::string docRootPath, int no_processes);
+	//destructor, frees memory allocated under pointers
+	~Index();
 	//TODO method which creates and trims the wordmap, gets rid of terms which do not accumulate min_count of occurences, sorts by idf and trims the wordmap to a size of "size" argument
 	bool CreateWordmap(int minCount, int size);
 	//TODO method which creates and trims the wordmap, gets rid of terms which do not accumulate min_count of occurences

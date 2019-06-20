@@ -1,3 +1,6 @@
+#ifndef INDEX_H
+#define INDEX_H
+
 #include <string>
 #include <map>
 #include <list>
@@ -55,3 +58,5 @@ public:
 	//method, which trims the wordmap, TODO currently only mincount is implemented and it is hardcoded to 5
 	void TrimWordmap();
 };
+
+#endif //!INDEX_H

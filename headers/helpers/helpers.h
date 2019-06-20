@@ -1,3 +1,6 @@
+#ifndef HELPERS_H
+#define HELPERS_H
+
 #include <fstream>
 #include <algorithm> 
 #include <cctype>
@@ -67,3 +70,5 @@ namespace helpers{
                  	   (std::istreambuf_iterator<char>()));
 	}
 }
+
+#endif // !HELPERS_H

@@ -1,3 +1,6 @@
+#ifndef ERRORHANDLER_H
+#define ERRORHANDLER_H
+
 #include <iostream>
 
 
@@ -9,3 +12,5 @@ TODO
 the handleFSError outputs a meaning of an error and a datetime of the error occurence in the log file (only when, and if logging is implemented)
 */
 void handleFSError(int errorCode);
+
+#endif // !ERRORHANDLER_H

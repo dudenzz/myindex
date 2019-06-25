@@ -8,6 +8,7 @@ class PmXMLparser
 		std::string out_directory;
 		std::vector<std::string> key_tokens;
 	public:
+		void CreatePaths(std::string out_path);
 		PmXMLparser();
 		PmXMLparser(std::string initial_path, std::string out_directory);
 		void ParsePath(std::string dir, std::string out_path, int no_processes);

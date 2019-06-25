@@ -1,3 +1,6 @@
+#ifndef PUNKTPP_H
+#define PUNKTPP_H
+
 #include "tokenizer.h"
 //TODO - a lot
 class PunktTokenizer : public Tokenizer
@@ -8,3 +11,5 @@ class PunktTokenizer : public Tokenizer
 		//a simple tokenizing method
 		std::list<std::string> _word_tokenize_simple(std::string text);
 };
+
+#endif // !PUNKTPP_H

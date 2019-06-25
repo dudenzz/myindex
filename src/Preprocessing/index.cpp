@@ -58,6 +58,7 @@ Index::Index(std::string docRootPath)
 }
 //base constructor
 Index::Index(std::string docRootPath, int no_processes)
+	: documents(nullptr), filenames_per_process(nullptr) // Initialize pointers
 {
 	const fs::path path(docRootPath); // Constructing the path from a string is possible.
     	std::error_code ec; // For using the non-throwing overloads of functions below.
@@ -74,12 +75,14 @@ Index::Index(std::string docRootPath, int no_processes)
 		//get the number of documents to be processed
 		int fnsize = filenames.size();
 		std::cout << "There are " << fnsize << " files on the list" << std::endl;
-		//if there is less than 1000 documents per processing thread
-		if (fnsize / 1000 < no_processes-1)
+		//use const variable to set docs per thread number
+		constexpr int documents_per_thread = 1000;
+		//if there is less than 'documents_per_thread' documents per processing thread
+		if (fnsize / documents_per_thread < no_processes-1)
 		{
-			std::cout << "Planned number of processes is too large" << std::endl << "Setting number of processes to "<<fnsize/1000 + 1 <<std::endl;
-			//set the number of processing threads so each has to process at least 1000 documents
-			this->no_processes = fnsize / 1000 + 1;
+			std::cout << "Planned number of processes is too large" << std::endl << "Setting number of processes to "<<fnsize/documents_per_thread + 1 <<std::endl;
+			//set the number of processing threads so each has to process at least 'documents_per_thread' documents
+			this->no_processes = fnsize / documents_per_thread + 1;
 		}
 		else
 		{
@@ -87,8 +90,8 @@ Index::Index(std::string docRootPath, int no_processes)
 			//otherwise assume the number of processing threads given in the argument
 			this->no_processes = no_processes;
 		}
-		//get the number of CPUs
-		int numCPU = sysconf(_SC_NPROCESSORS_ONLN);
+		//get the number of CPUs (using std library)
+		int numCPU = std::thread::hardware_concurrency();
 		std::cout << "Avaliable number of cores: " << numCPU << std::endl;
 		//if there are more processing threads than number of CPUs
 		if(numCPU < this->no_processes)
@@ -107,6 +110,18 @@ Index::Index(std::string docRootPath, int no_processes)
 	}
 	//TODO
 	wordmapSize = 100000;
+}
+
+Index::~Index()
+{
+	//StW: TODO - free documents pointer
+
+	// Free memory under filenames_per_process pointer
+	if(filenames_per_process != nullptr) 
+	{
+		delete[] filenames_per_process;
+		filenames_per_process = nullptr;
+	}
 }
 
 void Index::AssignDocuments()
@@ -176,7 +191,7 @@ void Index::CreateWordmap()
 	std::cout << this->filenames_per_process[0].front() << std::endl;
 	//create arrays for threads and progress bars	
 	std::future<Wordmap> threads[this->no_processes];
-	std::atomic<int> atomics[this->no_processes];
+	std::atomic<int> atomics[this->no_processes] = {0}; // Initialize all atomic-int with 0 value 
 	//create an empty wordmap
 	Wordmap wm;
 	//create and launch the processing threads

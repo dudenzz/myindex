@@ -1,3 +1,6 @@
+#ifndef WORDMAP_H
+#define WORDMAP_H
+
 #include <map>
 #include <list>
 #include <string>
@@ -19,3 +22,5 @@ public:
 	void SaveWordmap(std::string filename);
 	void MinCount(int min_count);
 };
+
+#endif // !WORDMAP_H

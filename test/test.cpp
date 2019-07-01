@@ -12,5 +12,5 @@ int main(int argc, char* argv[])
 	c.AssignDocuments();
 	c.CreateWordmap();
 	c.TrimWordmap();
-	c.GetWordmap().SaveWordmap("20news_wm");
+	//c.GetWordmap().SaveWordmap("20news_wm");
 }

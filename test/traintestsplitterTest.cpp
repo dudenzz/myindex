@@ -3,7 +3,7 @@
 
 int main(int argc, char* argv[])
 {
-    TrainTestSplitter splitter({"data/qrels-final-abstracts.txt", "data/qrels-treceval-abstracts-2018-v2.txt"}, 0.925, TrainTestSplitter::SplitMode::Balanced, true);
+    TrainTestSplitter splitter({"data/QRels18/qrels-treceval-abstracts-2018-v2.txt"}, 0.85, TrainTestSplitter::SplitMode::Balanced, true);
 
     auto train = splitter.getTrainSet();
     auto test = splitter.getTestSet();

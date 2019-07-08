@@ -7,7 +7,7 @@ check the annotations in the qrels file (currently: -1 = unjugded)
 	c. wyodrebnic te, ktore sa w qrelsach
 	c. utworzyc wordmape podobnie do tego, co jest w test.cpp (nie trzeba jej zapisywac)
 	d. zapisac dokumenty w postaci wektorowej (tokenizer jest zapimplementowany)
-
+	e. przetestowac za pomoca liblineara
 nalezy pamietac o tym, ze tworzymy jedna macierz dla testu i jedna macierz dla train
 
 relevance word_id:1 word2_id:1 ... word_n:1 // to dotyczy 1 dokumentu

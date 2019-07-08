@@ -7,6 +7,8 @@
 #include <locale>
 #include <string>
 #include <list>
+#include <boost/algorithm/string.hpp>
+
 /*
 helpers file contains definitions of procedures and functions which are used across the project
 */
@@ -68,6 +70,13 @@ namespace helpers{
     		std::ifstream ifs(path);
     		return std::string((std::istreambuf_iterator<char>(ifs)),
                  	   (std::istreambuf_iterator<char>()));
+	}
+	static inline std::vector<std::string> read_collocations_tokens()
+	{
+		auto text = get_file_string("data/col_tokens");
+		std::vector<std::string> tokens;
+		boost::split(tokens,text, [](char c){return c == ' ';});
+		return tokens;
 	}
 }
 

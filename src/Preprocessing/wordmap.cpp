@@ -136,4 +136,4 @@ void Wordmap::MinCount(int min_count)
 		reverse_index.erase(i);
 		word_index.erase(word);
 	}
-}	
+}

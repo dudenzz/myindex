@@ -72,3 +72,35 @@ std::list<std::string> PunktTokenizer::_word_tokenize_simple(std::string text)
 	//return the list of tokens
 	return list_of_tokens;
 }
+std::list<std::pair<std::string,std::string>> PunktTokenizer::_collocations(std::vector<std::string> col_tokens, std::list<std::string> tokens)
+{
+	//for token in tokens:
+		//if next_col:
+			//collocation = (prev_token, token)
+			//next_col = false
+		//if token in col_tokens:
+			//if prev_token:
+				//collocation = (prev_token, token)
+			//next_col = true
+		//prev_token = token
+	std::list<std::pair<std::string, std::string>> cols;
+	int next_col = 0;
+	std::string prev_token = "";
+	for(std::string token : tokens)
+	{
+		if(next_col = 1)
+		{
+			cols.push_back(std::make_pair(prev_token, token));
+			next_col = 0;
+		}
+		if(std::find(col_tokens.begin(),col_tokens.end(),token) != col_tokens.end())
+		{
+			next_col = 1;
+			if(prev_token.compare("") != 0)
+			      cols.push_back(std::make_pair(prev_token, token));
+
+		}
+		prev_token = token;
+	}
+	return cols;
+}

@@ -1,1 +1,15 @@
 check the annotations in the qrels file (currently: -1 = unjugded)
+
+
+1. utworzyc wordmape dla dokumentow z qrels
+	a. rozpakowac dokumenty (wszystkie)
+	b. wykonac parsowanie dokumentow i zapisac w nowym katalogu(tak jak w parserTest.cpp)
+	c. wyodrebnic te, ktore sa w qrelsach
+	c. utworzyc wordmape podobnie do tego, co jest w test.cpp (nie trzeba jej zapisywac)
+	d. zapisac dokumenty w postaci wektorowej (tokenizer jest zapimplementowany)
+
+nalezy pamietac o tym, ze tworzymy jedna macierz dla testu i jedna macierz dla train
+
+relevance word_id:1 word2_id:1 ... word_n:1 // to dotyczy 1 dokumentu
+relevance word_id:1 word2_id:1 ...          // a to drugiego
+					    // ... itd. dla wszystkich dokumentow

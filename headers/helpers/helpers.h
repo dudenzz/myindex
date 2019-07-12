@@ -8,6 +8,7 @@
 #include <string>
 #include <list>
 #include <boost/algorithm/string.hpp>
+#include <iostream>
 
 /*
 helpers file contains definitions of procedures and functions which are used across the project
@@ -68,6 +69,7 @@ namespace helpers{
 	static inline std::string get_file_string(std::string path)
 	{
     		std::ifstream ifs(path);
+			if(!ifs) std::cout << "Helpers | Error: cannot open given path: " << path << std::endl;
     		return std::string((std::istreambuf_iterator<char>(ifs)),
                  	   (std::istreambuf_iterator<char>()));
 	}

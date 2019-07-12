@@ -9,13 +9,12 @@ class LibLinearClassifier : public BinaryClassifier
 public:
     LibLinearClassifier();
 
-    void train();
+    void train(std::string filename);
 
     bool predict(std::string filename);
 
 private:
     const std::string model_filename = "data/liblinear_model";
-    const std::string training_set_filename = "liblinear/heart_scale";
 };
 
 #endif // !LIBLINEARCLASSIFIER

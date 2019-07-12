@@ -10,13 +10,13 @@ LibLinearClassifier::LibLinearClassifier()
 
 }
 
-void LibLinearClassifier::train()
+void LibLinearClassifier::train(std::string filename)
 {
     std::string flags = "-s 1 -q";
     std::string command = "liblinear/train";
 
     command += " " + flags;
-    command += " " + training_set_filename;
+    command += " " + filename;
     command += " " + model_filename;
 
     std::cout << "BinaryClassifier | Running command: " << command << std::endl;

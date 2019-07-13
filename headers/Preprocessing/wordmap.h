@@ -21,6 +21,7 @@ public:
 	int AddDocument(std::list<std::string> tokens);
 	void SaveWordmap(std::string filename);
 	void MinCount(int min_count);
+	std::map<std::string,int>& GetWordIndex();
 };
 
 #endif // !WORDMAP_H

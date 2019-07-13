@@ -137,3 +137,8 @@ void Wordmap::MinCount(int min_count)
 		word_index.erase(word);
 	}
 }
+
+std::map<std::string,int>& Wordmap::GetWordIndex()
+{
+	return word_index;
+}

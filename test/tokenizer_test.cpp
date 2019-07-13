@@ -1,10 +1,15 @@
 #include <iostream>
 #include <fstream>
-#include "punktpp.h"
+#include "../headers/Preprocessing/punktpp.h"
 
-int main()
+int main(int argc, char** argv)
 {
-	std::ifstream strm("//home/jakub/twe/last_version/20-news-all/alt.atheism/54481");
+	if(argc != 2)
+	{
+		std::cout<<"Wrong params"<<std::endl;
+	}
+
+	std::ifstream strm(argv[1]);
 	PunktTokenizer tok = PunktTokenizer();
 	std::string text;
 	std::string all_text = "";
@@ -14,5 +19,9 @@ int main()
 		all_text += text + " ";
 	}
 	auto tokens = tok._word_tokenize_simple(all_text);
-	std::cout << all_text << std::endl;
+	for(auto& t : tokens)
+	{
+		std::cout<<t<<std::endl;
+	}
+	std::cout << std::endl << all_text << std::endl;
 }

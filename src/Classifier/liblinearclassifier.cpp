@@ -12,7 +12,7 @@ LibLinearClassifier::LibLinearClassifier()
 
 void LibLinearClassifier::train(std::string filename)
 {
-    std::string flags = "-s 1 -q";
+    std::string flags = "";
     std::string command = "liblinear/train";
 
     command += " " + flags;
@@ -21,12 +21,12 @@ void LibLinearClassifier::train(std::string filename)
 
     std::cout << "BinaryClassifier | Running command: " << command << std::endl;
     int ret = system(command.c_str());
-    std::cout << "BinaryClassifier | LibLinear Train returned: " << ret << std::endl;
+    std::cout << "BinaryClassifier | Subprogram liblinear/train returned: " << ret << std::endl;
 }
 
 bool LibLinearClassifier::predict(std::string test_filename)
 {
-    std::string flags = "-q";
+    std::string flags = "";
     std::string output_filename = "predict_out";
 
     std::string command = "liblinear/predict";
@@ -37,7 +37,7 @@ bool LibLinearClassifier::predict(std::string test_filename)
 
     std::cout << "BinaryClassifier | Running command: " << command << std::endl;
     int ret = system(command.c_str());
-    std::cout << "BinaryClassifier | LibLinear Predict returned: " << ret << std::endl;
+    std::cout << "BinaryClassifier | Subprogram liblinear/predict returned: " << ret << std::endl;
 
     std::ifstream in("predict_out");
     int result;

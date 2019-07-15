@@ -34,36 +34,36 @@ int main(int argc, char* argv[])
         std::cout << "Input dir does not exist. Aborting..." << std::endl;
         return 1;
     }
-    std::string outDir(argv[2]);
-    if(outDir[outDir.size()-1] != '/') outDir = outDir + "/";
-    if(!fs::exists(outDir))
+    std::string baseOutDir(argv[2]);
+    if(baseOutDir[baseOutDir.size()-1] != '/') baseOutDir = baseOutDir + "/";
+    if(!fs::exists(baseOutDir))
     {
-        fs::create_directory(outDir);
+        fs::create_directory(baseOutDir);
         std::cout << "Output dir does not exist. Creating..." << std::endl;
     }
     std::string trainOutDirName = "train_set/";
     std::string testOutDirName = "test_set/";
-    if(!fs::exists(outDir + trainOutDirName))
+    if(!fs::exists(baseOutDir + trainOutDirName))
     {
-        fs::create_directory(outDir + trainOutDirName);
+        fs::create_directory(baseOutDir + trainOutDirName);
         std::cout << "Train Output dir does not exist. Creating..." << std::endl;
     }
     else
     {
         std::cout<<"Clearing train output dir." << std::endl;
-        std::cout << "Deleted elements: " << fs::remove_all(outDir + trainOutDirName) << std::endl;
-        fs::create_directory(outDir + trainOutDirName);
+        std::cout << "Deleted elements: " << fs::remove_all(baseOutDir + trainOutDirName) << std::endl;
+        fs::create_directory(baseOutDir + trainOutDirName);
     }
-    if(!fs::exists(outDir + testOutDirName))
+    if(!fs::exists(baseOutDir + testOutDirName))
     {
-        fs::create_directory(outDir + testOutDirName);
+        fs::create_directory(baseOutDir + testOutDirName);
         std::cout << "Test Output dir does not exist. Creating..." << std::endl;
     }
     else
     {
         std::cout<<"Clearing test output dir." << std::endl;
-        std::cout << "Deleted elements: " << fs::remove_all(outDir + testOutDirName) << std::endl;
-        fs::create_directory(outDir + testOutDirName);
+        std::cout << "Deleted elements: " << fs::remove_all(baseOutDir + testOutDirName) << std::endl;
+        fs::create_directory(baseOutDir + testOutDirName);
     }
     int processesNo = std::stoi(argv[3]);
 
@@ -83,7 +83,7 @@ int main(int argc, char* argv[])
         const std::string pathToFile = inDir + docIdToFilename(qrel.documentNo) + ".xml";
         if(fs::exists(pathToFile))
         {
-            std::string outFile = outDir + trainOutDirName + qrel.documentNo + ".xml";
+            std::string outFile = baseOutDir + trainOutDirName + qrel.documentNo + ".xml";
             if(fs::exists(outFile))
             {
                 //std::cout<<"File " + qrel.documentNo + ".xml" + " already copied. Skipping." <<std::endl;
@@ -120,7 +120,7 @@ int main(int argc, char* argv[])
         const std::string pathToFile = inDir + docIdToFilename(qrel.documentNo) + ".xml";
         if(fs::exists(pathToFile))
         {
-            std::string outFile = outDir + testOutDirName + qrel.documentNo + ".xml";
+            std::string outFile = baseOutDir + testOutDirName + qrel.documentNo + ".xml";
             if(fs::exists(outFile))
             {
                 //std::cout<<"File " + qrel.documentNo + ".xml" + " already copied. Skipping." <<std::endl;
@@ -148,11 +148,11 @@ int main(int argc, char* argv[])
 
     // create wordmap
     std::cout << "Creating wordmap..." <<std::endl;
-    Index c = Index(outDir, processesNo);
+    Index c = Index(baseOutDir, processesNo);
 	c.AssignDocuments();
 	c.CreateWordmap();
 	c.TrimWordmap();
-	c.GetWordmap().SaveWordmap(outDir+"train_test_set_wordmap.txt");
+	c.GetWordmap().SaveWordmap(baseOutDir + "train_test_set_wordmap.txt");
     auto wordmap = c.GetWordmap();
 
 
@@ -160,9 +160,9 @@ int main(int argc, char* argv[])
 
     // create train file
     std::cout << "Creating train file..." <<std::endl;
-    const std::string trainSetFileName = outDir + "train_set_for_liblinear.txt";
+    const std::string trainSetFileName = baseOutDir + "train_set_for_liblinear.txt";
     std::ofstream trainSetFile(trainSetFileName);
-    for(auto& file: fs::recursive_directory_iterator(outDir + trainOutDirName))
+    for(auto& file: fs::recursive_directory_iterator(baseOutDir + trainOutDirName))
     {
         std::string text;
         std::string all_text = "";
@@ -176,7 +176,7 @@ int main(int argc, char* argv[])
         auto tokens = tok._word_tokenize_simple(all_text);
         std::map<int, bool> usedTokens;
 
-        // remove '.xml' to get doc id only (from filename
+        // remove '.xml' to get doc id only (from filename)
         std::string docId = std::string(filename.begin(), filename.end()-4); 
         std::string relevance;
         if(docIdToRelevance.find(docId) != docIdToRelevance.end())
@@ -185,13 +185,13 @@ int main(int argc, char* argv[])
         }
         else
         {
-            std::cout << "Cannot find relevance for given doc id. "<<std::endl;
+            std::cout << "Cannot find relevance for given doc id: " << docId <<std::endl;
             continue;
         }
 
         // write to file
         std::vector<std::pair<int,int>> samples;
-        trainSetFile << relevance;;
+        trainSetFile << relevance;
         auto& wordToWordIdIndex = wordmap.GetWordIndex();
         for(auto& token : tokens)
         {
@@ -214,9 +214,9 @@ int main(int argc, char* argv[])
 
     // create test file
     std::cout << "Creating test file..." <<std::endl;
-    const std::string testSetFileName = outDir + "test_set_for_liblinear.txt";
+    const std::string testSetFileName = baseOutDir + "test_set_for_liblinear.txt";
     std::ofstream testSetFile(testSetFileName);
-    for(auto& file: fs::recursive_directory_iterator(outDir + testOutDirName))
+    for(auto& file: fs::recursive_directory_iterator(baseOutDir + testOutDirName))
     {
         std::string text;
         std::string all_text = "";
@@ -239,7 +239,7 @@ int main(int argc, char* argv[])
         }
         else
         {
-            std::cout << "Cannot find relevance for given doc id. "<<std::endl;
+            std::cout << "Cannot find relevance for given doc id: " << docId <<std::endl;
             continue;
         }
 

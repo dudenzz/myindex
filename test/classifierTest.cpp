@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 {
     // parse parameters
     if(argc != 4) {
-        std::cout << "Wrong parameters number (not 4)!"<<std::endl;
+        std::cout << "Wrong parameters number (not 3)! Current: " << argc-1 <<std::endl; // 0 arg = program name
         return 1;
     }
     std::string inDir(argv[1]);

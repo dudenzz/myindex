@@ -374,7 +374,7 @@ void read_problem(const char *filename)
 
 	prob.l = 0;
 	elements = 0;
-	max_line_len = 1024;
+	max_line_len = 1024*10;
 	line = Malloc(char,max_line_len);
 	while(readline(fp)!=NULL)
 	{

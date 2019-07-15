@@ -78,7 +78,7 @@ void do_predict(FILE *input, FILE *output)
 		free(labels);
 	}
 
-	max_line_len = 1024;
+	max_line_len = 1024*10;
 	line = (char *)malloc(max_line_len*sizeof(char));
 	while(readline(input) != NULL)
 	{

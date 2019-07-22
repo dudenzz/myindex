@@ -195,8 +195,8 @@ int main(int argc, char* argv[])
         auto& wordToWordIdIndex = wordmap.GetWordIndex();
         for(auto& token : tokens)
         {
-            int wordId = wordToWordIdIndex[token];
-            if(usedTokens.find(wordId) == usedTokens.end() && wordId != 0) // there is no given id in the set, so write it to the file
+            int wordId = wordToWordIdIndex[token] + 1;
+            if(usedTokens.find(wordId) == usedTokens.end()) // there is no given id in the set, so write it to the file
             {
                 samples.push_back(std::pair<int,int>(wordId, 1));
                 usedTokens[wordId] = 1;
@@ -249,8 +249,8 @@ int main(int argc, char* argv[])
         std::vector<std::pair<int, int>> samples;
         for(auto& token : tokens)
         {
-            int wordId = wordToWordIdIndex[token];
-            if(usedTokens.find(wordId) == usedTokens.end() && wordId != 0) // there is no given id in the set, so write it to the file
+            int wordId = wordToWordIdIndex[token] + 1;
+            if(usedTokens.find(wordId) == usedTokens.end()) // there is no given id in the set, so write it to the file
             {
                 samples.push_back(std::pair<int,int>(wordId, 1));
                 usedTokens[wordId] = 1;

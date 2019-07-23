@@ -56,6 +56,8 @@ int Parse(std::list<std::string> filepaths, std::string out_path, std::atomic<in
 	int iter = 0;
 	if(filepaths.size() == 0)
 		progress->store(100);
+	std::ofstream oFile;
+	oFile.open(out_path + ".xml");
 	for(auto filepath : filepaths)
 	{
 		progress->store((iter*100)/filepaths.size());
@@ -113,7 +115,7 @@ int Parse(std::list<std::string> filepaths, std::string out_path, std::atomic<in
 								text += "\n</" + pair.first + ">";
 							}
 							text += "\n</document>";
-							std::ofstream oFile;
+							
 
 							//example pmid: 30516271
 							//1st digit = pmid/10000000
@@ -123,20 +125,20 @@ int Parse(std::list<std::string> filepaths, std::string out_path, std::atomic<in
 							//2nd digit = (30516271 - 3*10000000) / 1000000 = 0516271 / 1000000 = 0
 							//3rd digir = (30516271 - 3*10000000 - 0*1000000) / 100000 = 516271/100000 = 5
 							//path = out_dir/3/0/5/30516271
-							int pmid_i = atoi(pmid.c_str());
-							int dig1 = pmid_i/10000000;
-							int dig2 = (pmid_i-dig1*10000000)/1000000;
-							int dig3 = (pmid_i-dig1*10000000-dig2*1000000)/100000;
-							std::string pth = out_path + std::to_string(dig1) + "/" + std::to_string(dig2) + "/" + std::to_string(dig3) + "/";
+							// int pmid_i = atoi(pmid.c_str());
+							// int dig1 = pmid_i/10000000;
+							// int dig2 = (pmid_i-dig1*10000000)/1000000;
+							// int dig3 = (pmid_i-dig1*10000000-dig2*1000000)/100000;
+							// std::string pth = out_path + std::to_string(dig1) + "/" + std::to_string(dig2) + "/" + std::to_string(dig3) + "/";
 							if(skip_this_document)
 							{
 								skip_this_document = 0;
 							}
 							else
 							{
-								oFile.open(pth + pmid + ".xml");
+								
 								oFile << text;
-								oFile.close();
+								
 							}
 						}
 						else
@@ -199,6 +201,7 @@ int Parse(std::list<std::string> filepaths, std::string out_path, std::atomic<in
 		iter += 1;
 		progress->store((iter*100)/filepaths.size());
 	}
+	oFile.close();
 	return 0;
 }
 void PmXMLparser::ParsePath(std::string dir, std::string opath, int no_processes, int skipping_corrections)
@@ -216,7 +219,7 @@ void PmXMLparser::ParsePath(std::string dir, std::string opath, int no_processes
 		  }
 	for(int i = 0; i<no_processes; i++)
 	{
-		threads[i] = std::async(std::launch::async,Parse,paths[i],opath,&atomics[i],this->key_tokens, skipping_corrections);
+		threads[i] = std::async(std::launch::async,Parse,paths[i],opath + "/" + std::to_string(i),&atomics[i],this->key_tokens, skipping_corrections);
 	}
         bool check = 2;
         while(check)

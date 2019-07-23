@@ -17,6 +17,8 @@ SRCCLR= test/classifierTest.cpp \
 	src/helpers/errorHandler.cpp 
 
 SRCTOK= test/tokenizer_test.cpp src/Preprocessing/punktpp.cpp
+SRCEXTR= test/extractQRelsDocs.cpp src/TrainTestSplitter/traintestsplitter.cpp
+
 
 parserTest: $(SRCSP)
 	$(CXX) $(CPPFLAGS) -o bin/ParserTest.out $(SRCSP) $(FSFLAG)
@@ -24,4 +26,4 @@ parserTest: $(SRCSP)
 	$(CXX) $(CPPFLAGS) -o bin/SplitterTest.out $(SRCTTS)
 	$(CXX) $(CPPFLAGS) -o bin/ClassifierTest.out $(SRCCLR) $(FSFLAG)
 	$(CXX) $(CPPFLAGS) -o bin/TokenizerTest.out $(SRCTOK)
-
+	$(CXX) $(CPPFLAGS) -o bin/ExtractQRelsDocs.out $(SRCEXTR) $(FSFLAG)

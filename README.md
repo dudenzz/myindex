@@ -12,4 +12,6 @@ Usage:
 	2. make
 	3. ./bin/GeneralTest path_to_a_directory_with_any_set_of_documents number_of_processing_threads
 	4. ./bin/ParserTest path_to_a_directory_with_pubmed_documents path_to_output_documents number_of_processing_threads
-	5. ./bin/ClassifierTest.out input_parsedDocsRootDir output_trainTestDocsRoot processesNumber
+	5. ./bin/ExtractQRelsDocs.out inputDirPath_hugeXMLFilesDir outputDirPath_singleFilePerDocDir
+	6. ./bin/ClassifierTest.out inputDirPath_singleFilePerDocDir outputDirPath_classifierConfigFilesEtcDir processesNumber
+

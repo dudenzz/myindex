@@ -148,7 +148,7 @@ void do_predict(FILE *input, FILE *output)
 			fprintf(output,"%.17g\n",predict_label);
 		}
 
-		if(predict_label == target_label)
+		/*if(predict_label == target_label)
 			++correct;
 		error += (predict_label-target_label)*(predict_label-target_label);
 		sump += predict_label;
@@ -156,8 +156,10 @@ void do_predict(FILE *input, FILE *output)
 		sumpp += predict_label*predict_label;
 		sumtt += target_label*target_label;
 		sumpt += predict_label*target_label;
-		++total;
+		++total;*/
 	}
+	info("End\n");
+	/*
 	if(check_regression_model(model_))
 	{
 		info("Mean squared error = %g (regression)\n",error/total);
@@ -168,6 +170,7 @@ void do_predict(FILE *input, FILE *output)
 	}
 	else
 		info("Accuracy = %g%% (%d/%d)\n",(double) correct/total*100,correct,total);
+	*/
 	if(flag_predict_probability)
 		free(prob_estimates);
 }

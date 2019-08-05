@@ -78,18 +78,18 @@ Index::Index(std::string docRootPath, int no_processes)
 		//use const variable to set docs per thread number
 		constexpr int documents_per_thread = 1000;
 		//if there is less than 'documents_per_thread' documents per processing thread
-		if (fnsize / documents_per_thread < no_processes-1)
-		{
-			std::cout << "Planned number of processes is too large" << std::endl << "Setting number of processes to "<<fnsize/documents_per_thread + 1 <<std::endl;
-			//set the number of processing threads so each has to process at least 'documents_per_thread' documents
-			this->no_processes = fnsize / documents_per_thread + 1;
-		}
-		else
-		{
-			std::cout << "Setting number of processes to " << no_processes << std::endl;
+		//if (fnsize / documents_per_thread < no_processes-1)
+		//{
+		//	std::cout << "Planned number of processes is too large" << std::endl << "Setting number of processes to "<<fnsize/documents_per_thread + 1 <<std::endl;
+		//	//set the number of processing threads so each has to process at least 'documents_per_thread' documents
+		//	this->no_processes = fnsize / documents_per_thread + 1;
+		//}
+		//else
+		//{
+		//	std::cout << "Setting number of processes to " << no_processes << std::endl;
 			//otherwise assume the number of processing threads given in the argument
 			this->no_processes = no_processes;
-		}
+		//}
 		//get the number of CPUs (using std library)
 		int numCPU = std::thread::hardware_concurrency();
 		std::cout << "Avaliable number of cores: " << numCPU << std::endl;
@@ -130,16 +130,12 @@ void Index::AssignDocuments()
 	filenames_per_process = new std::list<std::string>[no_processes];
 	int size = this->filenames.size();
 	//calculate size of a single list
-	int size_per_process = size/this->no_processes + 1;
 	int current_process = 0;
-	int current_document = 0;
 	//split the filenames into created lists
 	for(std::string fn : filenames)
 	{
 		filenames_per_process[current_process].push_back(fn);
-		current_document += 1;
-		if (current_document % size_per_process == 0)
-			current_process += 1;
+		current_process = (current_process + 1)%no_processes;
 	}
 	std::cout << "Documents assigned for each process" << std::endl;
 	//indicate that lists for each processing thread have been created
@@ -156,21 +152,33 @@ Wordmap CreateSubWordmap(int tid, std::list<std::string> filenames, std::atomic<
 	//for each file in file in the map
 	for(std::string file : filenames)
 	{
-		//update the iterator
-		i += 1;
-		//every 1000 documents
-		if(i % 1000 == 0);
+		std::string line;
+		std::stringstream document;
+		std::ifstream infile(file);
+		while(std::getline(infile,line))
 		{
-			//update the progress
-			progress->store ((i*100)/size);
+			trim(line);
+			if(line.compare("<document>") == 0)
+			{
+				i -= 1;
+				progress->store(i);
+				std::string stringdoc(document.str());
+				if(stringdoc.compare("") != 0)
+				{
+					PunktTokenizer tok = PunktTokenizer();
+					auto tokens = tok._word_tokenize_simple(stringdoc);
+					wm.AddDocument(tokens);
+				}
+				document.clear();
+				document.str("");
+			}
+			else
+			{
+				document << line;
+			}
 		}
-		//tokenize the file
-		auto var = helpers::get_file_string(file);
-		PunktTokenizer tok = PunktTokenizer();
-		auto tokens = tok._word_tokenize_simple(var);
-		//add tokens to the wordmap
-		wm.AddDocument(tokens);
 	}
+	progress->store(100);
 	//return the wordmap
 	return wm;
 }

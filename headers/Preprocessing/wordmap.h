@@ -20,6 +20,7 @@ public:
 	int AddWord(std::string word, std::list<std::string>* added_in_doc);
 	int AddDocument(std::list<std::string> tokens);
 	void SaveWordmap(std::string filename);
+    void LoadWordmap(std::string filename);
 	void MinCount(int min_count);
 };
 

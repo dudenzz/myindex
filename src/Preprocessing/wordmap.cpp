@@ -15,6 +15,17 @@ Wordmap::Wordmap()
 	no_toks = 0;
 }
 
+void Wordmap::LoadWordmap(std::string filename)
+{
+	std::ifstream fileIn(filename);
+	if(fileIn.is_open())
+    {
+      std::string line;
+      if (getline(fileIn,line))
+		std::cout << line;
+    }
+}
+
 //method of saving a wordmap in a text file
 void Wordmap::SaveWordmap(std::string filename)
 {

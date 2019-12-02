@@ -4,10 +4,10 @@ CPPFLAGS=-std=c++17 -pthread -Ofast
 FSFLAG=-lstdc++fs
 
 SRCSP= test/parserTest.cpp src/XMLParser/pmXMLparser.cpp
-SRCSM= test/test.cpp src/helpers/helpers.cpp src/Preprocessing/index.cpp src/Preprocessing/wordmap.cpp src/Preprocessing/punktpp.cpp  src/helpers/errorHandler.cpp
+SRCSM= test/test.cpp src/helpers/helpers.cpp src/Preprocessing/index.cpp src/Preprocessing/wordmap.cpp src/Preprocessing/punktpp.cpp  src/helpers/errorHandler.cpp src/Preprocessing/indexed_document.cpp
 SRCTTS= test/traintestsplitterTest.cpp headers/TrainTestSplitter/traintestsplitter.h src/TrainTestSplitter/traintestsplitter.cpp
 SRCCLR= test/classifierTest.cpp src/Classifier/liblinearclassifier.cpp
-SRCLW= test/load_map.cpp src/helpers/helpers.cpp src/Preprocessing/index.cpp src/Preprocessing/wordmap.cpp src/Preprocessing/punktpp.cpp src/helpers/errorHandler.cpp
+SRCLW= test/load_map.cpp src/helpers/helpers.cpp src/Preprocessing/index.cpp src/Preprocessing/wordmap.cpp src/Preprocessing/punktpp.cpp src/helpers/errorHandler.cpp src/Preprocessing/indexed_document.cpp
 parserTest: $(SRCSP)
 	$(CXX) $(CPPFLAGS) -o bin/ParserTest.out $(SRCSP) $(FSFLAG)
 	$(CXX) $(CPPFLAGS) -o bin/GeneralTest.out $(SRCSM) $(FSFLAG)
